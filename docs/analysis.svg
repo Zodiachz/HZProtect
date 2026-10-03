@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" font-family="Segoe UI,Helvetica,Arial,sans-serif">
+  <rect width="1200" height="500" rx="14" fill="#0d1117"/>
+  <rect x="0.5" y="0.5" width="1199" height="499" rx="14" fill="none" stroke="#30363d"/>
+  <text x="40" y="52" fill="#e6edf3" font-size="26" font-weight="700">What a reverse-engineer sees in your binary</text>
+  <text x="40" y="80" fill="#8b949e" font-size="16">the same app's secrets, opened in a disassembler / <tspan font-family="Consolas,monospace">strings</tspan> (IDA, Ghidra, x64dbg)</text>
+
+  <!-- LEFT: unprotected -->
+  <g transform="translate(40,108)">
+    <rect width="540" height="356" rx="10" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
+    <rect width="540" height="40" rx="10" fill="#21262d"/>
+    <rect y="28" width="540" height="12" fill="#21262d"/>
+    <circle cx="22" cy="20" r="6" fill="#f85149"/><circle cx="42" cy="20" r="6" fill="#d29922"/><circle cx="62" cy="20" r="6" fill="#3fb950"/>
+    <text x="90" y="25" fill="#8b949e" font-size="14" font-family="Consolas,monospace">app.exe — without HZProtect</text>
+
+    <g font-family="Consolas,monospace" font-size="15" fill="#c9d1d9">
+      <text x="20" y="78" fill="#6e7681">.rdata  — readable in seconds</text>
+      <text x="20" y="116">api_key  = "<tspan fill="#f85149">DEMO-KEY-0123456789abcdef</tspan>"</text>
+      <text x="20" y="144">license  = "<tspan fill="#f85149">https://license.example.com</tspan>"</text>
+      <text x="20" y="172">seats    = 8   flags = pro,offline...</text>
+      <text x="20" y="214" fill="#6e7681">0040:  44 45 4d 4f 2d 4b 45 59   <tspan fill="#f85149">DEMO-KEY</tspan></text>
+      <text x="20" y="238" fill="#6e7681">0048:  2d 30 31 32 33 34 35 36   <tspan fill="#f85149">-0123456</tspan></text>
+
+      <text x="20" y="290" fill="#8b949e">$ strings app.exe | grep KEY</text>
+      <text x="20" y="314" fill="#f85149">DEMO-KEY-0123456789abcdef-NOT-A-REAL-SECRET</text>
+    </g>
+    <g transform="translate(20,336)"><rect width="250" height="26" rx="13" fill="#f85149" opacity="0.15"/><text x="14" y="18" font-family="Consolas,monospace" font-size="14" fill="#f85149">✗ secrets in cleartext</text></g>
+  </g>
+
+  <!-- RIGHT: protected -->
+  <g transform="translate(620,108)">
+    <rect width="540" height="356" rx="10" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
+    <rect width="540" height="40" rx="10" fill="#21262d"/>
+    <rect y="28" width="540" height="12" fill="#21262d"/>
+    <circle cx="22" cy="20" r="6" fill="#f85149"/><circle cx="42" cy="20" r="6" fill="#d29922"/><circle cx="62" cy="20" r="6" fill="#3fb950"/>
+    <text x="90" y="25" fill="#8b949e" font-size="14" font-family="Consolas,monospace">app.exe — with HZProtect</text>
+
+    <g font-family="Consolas,monospace" font-size="15" fill="#c9d1d9">
+      <text x="20" y="78" fill="#6e7681">.hzblob — AES-256-CTR (real bytes)</text>
+      <text x="20" y="116" fill="#3fb950">5f 8b 1f e8 b0 d3 32 68 e2 98 98 ec</text>
+      <text x="20" y="144" fill="#3fb950">1a 24 73 e9 a2 5d ca 30 b0 89 a4 ed</text>
+      <text x="20" y="172" fill="#3fb950">8a 38 68 30 42 fc 97 90 ...</text>
+      <text x="20" y="214" fill="#6e7681">0040:  5f 8b 1f e8 b0 d3 32 68   <tspan fill="#8b949e">._...2h</tspan></text>
+      <text x="20" y="238" fill="#6e7681">0048:  e2 98 98 ec 1a 24 73 e9   <tspan fill="#8b949e">.....$s.</tspan></text>
+
+      <text x="20" y="290" fill="#8b949e">$ strings app.exe | grep KEY</text>
+      <text x="20" y="314" fill="#3fb950">(no match — nothing to find)</text>
+    </g>
+    <g transform="translate(20,336)"><rect width="330" height="26" rx="13" fill="#3fb950" opacity="0.15"/><text x="14" y="18" font-family="Consolas,monospace" font-size="14" fill="#3fb950">✓ encrypted · decrypted only in RAM, wiped after</text></g>
+  </g>
+</svg>

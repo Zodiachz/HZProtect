@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" font-family="Segoe UI,Helvetica,Arial,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#58a6ff"/>
+      <stop offset="1" stop-color="#3fb950"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="300" rx="14" fill="url(#bg)"/>
+  <rect x="0.5" y="0.5" width="1199" height="299" rx="14" fill="none" stroke="#30363d"/>
+
+  <!-- shield + lock -->
+  <g transform="translate(70,68)">
+    <path d="M82 0 L156 26 V86 C156 134 122 160 82 174 C42 160 8 134 8 86 V26 Z"
+          fill="#0d1117" stroke="url(#accent)" stroke-width="3"/>
+    <rect x="54" y="78" width="56" height="44" rx="7" fill="#3fb950"/>
+    <path d="M64 78 V64 a18 18 0 0 1 36 0 V78" fill="none" stroke="#3fb950" stroke-width="7"/>
+    <circle cx="82" cy="97" r="7" fill="#0d1117"/>
+  </g>
+
+  <text x="270" y="118" fill="#e6edf3" font-size="66" font-weight="700">HZProtect</text>
+  <text x="272" y="162" fill="#8b949e" font-size="25">Source-integrated C++ binary protection for Windows</text>
+  <text x="272" y="196" fill="#6e7681" font-size="17" font-family="Consolas,monospace">header-only · no dependencies · MSVC x64 · MIT</text>
+
+  <!-- module chips -->
+  <g font-size="16" font-family="Consolas,monospace">
+    <g fill="#1f6feb" opacity="0.18"><rect x="272" y="222" width="132" height="34" rx="17"/><rect x="414" y="222" width="140" height="34" rx="17"/><rect x="564" y="222" width="140" height="34" rx="17"/><rect x="714" y="222" width="120" height="34" rx="17"/></g>
+    <g fill="#238636" opacity="0.18"><rect x="844" y="222" width="118" height="34" rx="17"/><rect x="972" y="222" width="150" height="34" rx="17"/></g>
+    <g fill="#c9d1d9">
+      <text x="338" y="244" text-anchor="middle">anti-debug</text>
+      <text x="484" y="244" text-anchor="middle">anti-tamper</text>
+      <text x="634" y="244" text-anchor="middle">hook-detect</text>
+      <text x="774" y="244" text-anchor="middle">str-crypt</text>
+      <text x="903" y="244" text-anchor="middle">AES-256</text>
+      <text x="1047" y="244" text-anchor="middle">Ed25519 lic</text>
+    </g>
+  </g>
+</svg>

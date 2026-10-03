@@ -1,4 +1,6 @@
-# HZProtect SDK
+<p align="center">
+  <img src="docs/hero.svg" alt="HZProtect — source-integrated C++ binary protection for Windows" width="100%">
+</p>
 
 A header-only C++ protection toolkit you compile into **your own** Windows
 application to make it harder to debug, crack, and reverse-engineer. No external
@@ -6,6 +8,22 @@ dependencies — include the headers, call into them from your own code.
 
 This is a *source-integrated* protection library (the developer builds it into
 their program). It is **not** a packer or a wrapper around arbitrary binaries.
+
+## What it does, at a glance
+
+Your secrets never sit in the binary as readable text — they are AES-encrypted
+and only decrypted in memory. The same bytes a reverse-engineer would open in
+IDA, Ghidra or `strings` show nothing:
+
+<p align="center">
+  <img src="docs/analysis.svg" alt="Before/after: secrets readable without HZProtect vs encrypted with it" width="100%">
+</p>
+
+## How it works
+
+<p align="center">
+  <img src="docs/pipeline.svg" alt="Build-time tools and runtime self-checks" width="100%">
+</p>
 
 ## Modules
 
