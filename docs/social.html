@@ -1,0 +1,50 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+  * { margin:0; box-sizing:border-box; }
+  html,body { width:1280px; height:640px; }
+  body {
+    font-family:'Segoe UI',Helvetica,Arial,sans-serif;
+    background:linear-gradient(135deg,#0d1117,#161b22);
+    color:#e6edf3; overflow:hidden; position:relative;
+  }
+  .frame { position:absolute; inset:18px; border:1px solid #30363d; border-radius:20px; }
+  .wrap { position:absolute; inset:0; padding:70px 80px; display:flex; flex-direction:column; justify-content:center; }
+  .top { display:flex; align-items:center; gap:46px; }
+  .title { font-size:112px; font-weight:800; letter-spacing:-2px; line-height:1; }
+  .tag { font-size:34px; color:#8b949e; margin-top:22px; }
+  .meta { font-size:23px; color:#6e7681; margin-top:14px; font-family:Consolas,monospace; }
+  .chips { display:flex; flex-wrap:wrap; gap:16px; margin-top:40px; }
+  .chip { font-family:Consolas,monospace; font-size:24px; padding:12px 24px; border-radius:30px; }
+  .b { background:rgba(31,111,235,.16); color:#79c0ff; border:1px solid rgba(31,111,235,.4); }
+  .g { background:rgba(35,134,54,.16); color:#56d364; border:1px solid rgba(35,134,54,.45); }
+  .foot { position:absolute; left:80px; bottom:58px; font-family:Consolas,monospace; font-size:26px; color:#8b949e; }
+  .foot b { color:#58a6ff; }
+  .hex { position:absolute; right:70px; bottom:56px; font-family:Consolas,monospace; font-size:20px; color:#3fb950; opacity:.6; text-align:right; line-height:1.7; }
+</style></head><body>
+  <div class="frame"></div>
+  <div class="wrap">
+    <div class="top">
+      <svg width="150" height="168" viewBox="0 0 164 182">
+        <path d="M82 2 L160 28 V90 C160 140 124 168 82 180 C40 168 4 140 4 90 V28 Z" fill="#0d1117" stroke="#3fb950" stroke-width="4"/>
+        <rect x="52" y="80" width="60" height="48" rx="8" fill="#3fb950"/>
+        <path d="M63 80 V64 a19 19 0 0 1 38 0 V80" fill="none" stroke="#3fb950" stroke-width="8"/>
+        <circle cx="82" cy="101" r="8" fill="#0d1117"/>
+      </svg>
+      <div>
+        <div class="title">HZProtect</div>
+        <div class="tag">Source-integrated C++ binary protection for Windows</div>
+        <div class="meta">header-only &middot; no dependencies &middot; MSVC x64 &middot; MIT</div>
+      </div>
+    </div>
+    <div class="chips">
+      <span class="chip b">anti-debug</span>
+      <span class="chip b">anti-tamper</span>
+      <span class="chip b">hook-detect</span>
+      <span class="chip b">string + asset crypt</span>
+      <span class="chip g">AES-256</span>
+      <span class="chip g">Ed25519 licensing</span>
+      <span class="chip g">HWID binding</span>
+    </div>
+  </div>
+  <div class="foot">github.com/Zodiachz/<b>HZProtect</b></div>
+  <div class="hex">5f 8b 1f e8 b0 d3 32 68<br>strings &rarr; (no match)</div>
+</body></html>
