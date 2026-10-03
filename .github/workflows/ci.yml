@@ -1,0 +1,64 @@
+name: ci
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: cmake -B build -A x64
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Test (ctest)
+        run: ctest --test-dir build -C Release --output-on-failure
+
+      - name: Run demo + self-tests
+        shell: pwsh
+        run: |
+          $exe = "build\Release\hzdemo.exe"
+          $out = & $exe | Out-String
+          Write-Host $out
+          if ($out -notmatch 'SHA-256 OK')              { throw 'SHA-256 self-test failed' }
+          if ($out -notmatch 'AES-256 OK')              { throw 'AES-256 self-test failed' }
+          if ($out -notmatch 'verify_stamp\(\) = OK')   { throw 'integrity stamp not OK' }
+          if ($out -notmatch 'DEMO-KEY-0123456789abcdef')        { throw 'blob did not decrypt in memory' }
+          if ($out -notmatch 'inline-hooks:')           { throw 'hook scan missing' }
+          if ($out -notmatch 'machine HWID:')           { throw 'hwid missing' }
+
+      - name: Encryption check (secrets and asset must NOT appear in cleartext)
+        shell: pwsh
+        run: |
+          $bytes = [IO.File]::ReadAllBytes("build\Release\hzdemo.exe")
+          $ascii = [Text.Encoding]::ASCII.GetString($bytes)
+          if ($ascii.Contains('super-secret-license'))        { throw 'secret string leaked in cleartext' }
+          if ($ascii.Contains('api.internal.example'))        { throw 'endpoint leaked in cleartext' }
+          if ($ascii.Contains('DEMO-KEY-0123456789abcdef'))            { throw 'blob api_key leaked in cleartext' }
+          if ($ascii.Contains('license.example.com')) { throw 'blob license_server leaked in cleartext' }
+          Write-Host 'OK: encrypted literals + asset absent from binary'
+
+      - name: Tamper check (patched .text must be detected)
+        shell: pwsh
+        run: |
+          $src = "build\Release\hzdemo.exe"
+          $dst = "build\Release\hzdemo_t.exe"
+          Copy-Item $src $dst -Force
+          $b  = [IO.File]::ReadAllBytes($dst)
+          $lf = [BitConverter]::ToInt32($b,0x3C)
+          $ns = [BitConverter]::ToUInt16($b,$lf+6)
+          $os = [BitConverter]::ToUInt16($b,$lf+20)
+          $sec = $lf+24+$os
+          for ($i=0; $i -lt $ns; $i++) {
+            $o = $sec+$i*40
+            if ([Text.Encoding]::ASCII.GetString($b,$o,8).Trim([char]0) -eq '.text') {
+              $raw=[BitConverter]::ToInt32($b,$o+20); $rsz=[BitConverter]::ToInt32($b,$o+16)
+              $b[$raw+$rsz-1] = 0x55; break
+            }
+          }
+          [IO.File]::WriteAllBytes($dst,$b)
+          $out = & $dst | Out-String
+          if ($out -notmatch 'verify_stamp\(\) = TAMPERED') { throw 'tamper not detected' }
+          Write-Host 'OK: on-disk .text patch detected'

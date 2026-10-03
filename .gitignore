@@ -1,0 +1,17 @@
+build/
+build_cmake/
+out/
+*.exe
+*.obj
+*.ilk
+*.pdb
+*.exp
+*.lib
+# generated per build (secret key material / encrypted assets)
+hz_build_keys.h
+hz_build_key.bin
+config_blob.h
+# license authority artifacts (never commit private keys or issued licenses)
+*.bin
+*.key
+license_pubkey.h

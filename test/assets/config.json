@@ -1,0 +1,6 @@
+{
+  "license_server": "https://license.example.com/v2/validate",
+  "api_key": "DEMO-KEY-0123456789abcdef-NOT-A-REAL-SECRET",
+  "max_seats": 8,
+  "feature_flags": ["pro", "offline_grace", "telemetry_off"]
+}
